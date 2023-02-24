@@ -63,10 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
-  void initState()
-  {
-    
-  }
+  //void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +85,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               initialData: lds.logdetails,
               future: getlogindetails(lds),
               builder: (context, data) {
+                if (lds.isloaded == false) {
+                  return Center(child: CircularProgressIndicator());
+                }
                 return Stack(
                   children: [
                     Positioned(

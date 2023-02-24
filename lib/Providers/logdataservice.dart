@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class LogdataService extends ChangeNotifier {
   List<LogDetails> logdetails = [];
-
+  bool isloaded = false;
   void initialiseLog(QuerySnapshot<Map<String, dynamic>> data) {
     logdetails = [];
     for (int i = 0; i < data.docs.length; i++) {
@@ -17,8 +17,7 @@ class LogdataService extends ChangeNotifier {
           qr: data.docs[i]['qr']));
     }
     print("I am Completing the data");
+    isloaded = true;
     notifyListeners();
   }
-  
- 
 }
