@@ -238,7 +238,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 height: 50,
                                 child: Center(
                                     child: Text(
-                                  'Last Login at ${Dateconversion().lastLogin(lds.logdetails.last.date)}',
+                                  lds.logdetails.last.date.isEmpty
+                                      ? 'No Record Found'
+                                      : 'Last Login at ${Dateconversion().lastLogin(lds.logdetails.last.date)}',
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
