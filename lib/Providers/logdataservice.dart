@@ -17,6 +17,7 @@ class LogdataService extends ChangeNotifier {
           qr: data.docs[i]['qr']));
     }
     print("I am Completing the data");
+    print(logdetails);
     isloaded = true;
     notifyListeners();
   }

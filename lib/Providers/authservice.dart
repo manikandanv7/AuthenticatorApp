@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:example/Providers/logdataservice.dart';
+//import 'package:example/Providers/logdataservice.dart';
 import 'package:example/Providers/personalInfo_service.dart';
 
 import 'package:example/constants.dart';
@@ -28,9 +28,9 @@ class Authservice extends ChangeNotifier {
   UserModel get userModel => _userModel!;
   bool _isSignedIn = false;
   bool get isSignedIn => _isSignedIn;
-  String? _lastlogin = "";
-  String get lastlogin => _lastlogin!;
-  List<LogDetails> logdetails = [];
+  // String? _lastlogin = "";
+  // String get lastlogin => _lastlogin!;
+  // List<LogDetails> logdetails = [];
   Authservice() {
     checkSign();
   }
@@ -45,9 +45,9 @@ class Authservice extends ChangeNotifier {
         .collection('logindetails')
         .snapshots()
         .last;
-    final snap = latestdoc.docs.elementAt(0);
-    // print('$snap hiiiiiiiiiiiiiiiiii');
-    _lastlogin = snap['date'].toString();
+    // final snap = latestdoc.docs.elementAt(0);
+    // // print('$snap hiiiiiiiiiiiiiiiiii');
+    // _lastlogin = snap['date'].toString();
 
     notifyListeners();
   }
@@ -63,10 +63,10 @@ class Authservice extends ChangeNotifier {
   Future<bool> checkExistingUser() async {
     DocumentSnapshot snapshot = await store.collection("users").doc(_uid).get();
     if (snapshot.exists) {
-      print("USER EXISTS");
+      print("USER EXISTS..........................");
       return true;
     } else {
-      print("NEW USER");
+      print("NEW USER.........................................");
       return false;
     }
   }
@@ -86,6 +86,7 @@ class Authservice extends ChangeNotifier {
             verification_Id = verificationId;
           },
           codeAutoRetrievalTimeout: (String x) {});
+      print(number + "...............................................");
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message.toString());
     }
@@ -110,22 +111,16 @@ class Authservice extends ChangeNotifier {
                 {saveUsertoFirestore(user.phoneNumber.toString(), user.uid)}
             });
 
-        saveLogDatatoFirestore();
+        saveLogDatatoFirestore(context);
         SharedPreferences sf = await SharedPreferences.getInstance();
         sf.setBool('saved', true);
-        final lds = Provider.of<LogdataService>(context, listen: false);
-        final data = await store
-            .collection('users')
-            .doc(_uid)
-            .collection('logindetails')
-            .get();
-        lds.initialiseLog(data);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DashboardScreen(),
-          ),
-        );
+        // final lds = Provider.of<LogdataService>(context, listen: false);
+        // final data = await store
+        //     .collection('users')
+        //     .doc(_uid)
+        //     .collection('logindetails')
+        //     .get();
+        // lds.initialiseLog(data);
       }
 
       notifyListeners();
@@ -136,7 +131,7 @@ class Authservice extends ChangeNotifier {
     }
   }
 
-  void saveLogDatatoFirestore() async {
+  void saveLogDatatoFirestore(BuildContext context) async {
     final ipadd = await Personal_info().getip();
     final locationad = await Personal_info().getlocation();
     final logtime = DateTime.now().millisecondsSinceEpoch.toString();
@@ -159,7 +154,13 @@ class Authservice extends ChangeNotifier {
         .doc(auth.currentUser!.uid)
         .collection('logindetails')
         .doc('${documents + 1}')
-        .set(log.toMap());
+        .set(log.toMap())
+        .then((value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DashboardScreen(),
+              ),
+            ));
   }
 
   void saveUsertoFirestore(String mobilenumber, String uid) async {

@@ -53,17 +53,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
       d.initialiseLog(value);
 
-      Future.delayed(Duration(seconds: 4), () {
-        print("I am Getting Data");
+      // Future.delayed(Duration(seconds: 4), () {
+      //   //  print("I am Getting Data");
 
-        isLoading = false;
+      //   //  isLoading = false;
 
-        d.initialiseLog(value);
-      });
+      //   //  d.initialiseLog(value);
+      // });
     });
   }
 
-  //void initState() {}
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,17 +77,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // final ip = Pf.getip();
 
     authprovider.checkSign();
-    //getlogindetails(lds);
-    final location = Pf.getlocation();
-
+    // getlogindetails(lds);
+    // final location = Pf.getlocation();
+    print('i am build....................');
+    print("${lds.logdetails} log details in das screen ");
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
           child: FutureBuilder(
-              initialData: lds.logdetails,
+              // initialData: lds.logdetails,
               future: getlogindetails(lds),
               builder: (context, data) {
-                if (lds.isloaded == false) {
+                if (lds.logdetails.isEmpty) {
+                  getlogindetails(lds);
                   return Center(child: CircularProgressIndicator());
                 }
                 return Stack(
@@ -238,7 +242,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 height: 50,
                                 child: Center(
                                     child: Text(
-                                  lds.logdetails.last.date.isEmpty
+                                  lds.logdetails.last.date == null ||
+                                          lds.logdetails.last.date.isEmpty
                                       ? 'No Record Found'
                                       : 'Last Login at ${Dateconversion().lastLogin(lds.logdetails.last.date)}',
                                   style: TextStyle(
@@ -251,9 +256,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               height: 30,
                             ),
                             InkWell(
-                              onTap: () => _captureAndSharePng().then((value) =>
-                                  authprovider.saveQrtoStorage(
-                                      value, Pf.RandomNumber, context)),
+                              onTap: () => _captureAndSharePng().then((value) {
+                                authprovider.saveQrtoStorage(
+                                    value, Pf.RandomNumber, context);
+                                print('Image captures');
+                                getlogindetails(lds);
+                              }),
                               child: Container(
                                 width: Width * 0.7,
                                 decoration: BoxDecoration(

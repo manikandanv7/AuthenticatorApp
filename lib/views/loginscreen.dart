@@ -10,7 +10,6 @@ class LoginScreen extends StatelessWidget {
   TextEditingController mobilenumberController = new TextEditingController();
   TextEditingController OTPController = new TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     final authprovider = Provider.of<Authservice>(context, listen: false);
@@ -97,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(
                           height: 3,
                         ),
-                        InkWell(
+                        GestureDetector(
                           onTap: () {
                             if (mobilenumberController.text.length < 10 ||
                                 mobilenumberController.text.isEmpty) {

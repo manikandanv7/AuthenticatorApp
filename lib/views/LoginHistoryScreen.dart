@@ -18,6 +18,7 @@ class LoginHistory extends StatelessWidget {
     final lds = Provider.of<LogdataService>(context, listen: false);
     final height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
+    print('${lds.logdetails}in history Screen');
     return Scaffold(
       backgroundColor: Colors.deepPurple[800],
       body: Container(
