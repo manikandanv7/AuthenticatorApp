@@ -197,7 +197,7 @@ class Authservice extends ChangeNotifier {
         .doc(auth.currentUser!.uid)
         .collection('logindetails')
         .get();
-    final int documents = qSnap.docs.length;
+    final int lastdocument = qSnap.docs.length;
     // print('$documents.................');
     // print('${auth.currentUser!.uid}.....................');
     // print(url);
@@ -205,7 +205,7 @@ class Authservice extends ChangeNotifier {
         .collection('users')
         .doc(auth.currentUser!.uid)
         .collection('logindetails')
-        .doc('${documents}')
+        .doc('${lastdocument}')
         .update({"qr": url});
   }
 

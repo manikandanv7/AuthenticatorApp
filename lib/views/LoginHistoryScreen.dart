@@ -9,9 +9,14 @@ import 'package:provider/provider.dart';
 
 import '../Providers/authservice.dart';
 
-class LoginHistory extends StatelessWidget {
+class LoginHistory extends StatefulWidget {
   const LoginHistory({super.key});
 
+  @override
+  State<LoginHistory> createState() => _LoginHistoryState();
+}
+
+class _LoginHistoryState extends State<LoginHistory> {
   @override
   Widget build(BuildContext context) {
     final authprovider = Provider.of<Authservice>(context, listen: false);

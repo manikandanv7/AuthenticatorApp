@@ -53,13 +53,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
       d.initialiseLog(value);
 
-      // Future.delayed(Duration(seconds: 4), () {
-      //   //  print("I am Getting Data");
+      Future.delayed(Duration(seconds: 2), () {
+        //  print("I am Getting Data");
 
-      //   //  isLoading = false;
+        //  isLoading = false;
 
-      //   //  d.initialiseLog(value);
-      // });
+        //  d.initialiseLog(value);
+      });
     });
   }
 
